@@ -79,18 +79,7 @@ class _Section2ScreenState extends State<Section2Screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text('Registro da Queixa Principal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _queixaController,
-              maxLines: 4,
-              decoration: const InputDecoration(
-                hintText: 'Descreva a queixa principal do paciente...',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (val) => _updateData('queixa_principal', val),
-            ),
-            const SizedBox(height: 24),
+
 
             const Text('História Clínica', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
             const SizedBox(height: 8),
@@ -117,9 +106,21 @@ class _Section2ScreenState extends State<Section2Screen> {
             const SizedBox(height: 8),
             _buildCheckbox('"Tech Neck" (Uso excessivo de celular)', 'postura_tech_neck'),
             _buildCheckbox('Projeção Anterior de Cabeça', 'postura_projecao_cabeca'),
-            _buildCheckbox('Dorme de Lado/Bruços frequentemente', 'postura_dormir'),
+            _buildCheckbox('Dormir apoiado no braço ou sempre de um lado só', 'postura_dormir'),
             _buildCheckbox('Apoia o rosto nas mãos frequentemente', 'postura_apoiar_rosto'),
             
+            const SizedBox(height: 24),
+            const Text('Registro da Queixa Principal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _queixaController,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                hintText: 'Descreva a queixa principal do paciente...',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (val) => _updateData('queixa_principal', val),
+            ),
             const SizedBox(height: 24),
           ],
         ),

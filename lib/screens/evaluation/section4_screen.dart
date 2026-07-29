@@ -12,10 +12,25 @@ class Section4Screen extends StatefulWidget {
 }
 
 class _Section4ScreenState extends State<Section4Screen> {
-  void _updateScore(String key, String label, int score) {
+  void _updateRadioScore(String key, String label, int score) {
     setState(() {
       widget.evaluation.section4Data[key] = label;
       widget.evaluation.section4Data['${key}_score'] = score;
+      _calculateTotal();
+    });
+  }
+
+  void _updateSliderScore(String key, int score) {
+    setState(() {
+      widget.evaluation.section4Data[key] = score;
+      widget.evaluation.section4Data['${key}_score'] = score;
+      _calculateTotal();
+    });
+  }
+
+  void _updateCheckboxScore(String key, bool value) {
+    setState(() {
+      widget.evaluation.section4Data[key] = value;
       _calculateTotal();
     });
   }
@@ -27,17 +42,17 @@ class _Section4ScreenState extends State<Section4Screen> {
     });
     
     // Checkboxes (Flacidez)
-    if (widget.evaluation.section4Data['flacidez_palpebra_sup'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_palpebra_inf'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_bochechas'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_mandibula'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_papada'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_pescoco'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_orelha'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_labio_sup'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_labio_inf'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_comissuras'] == true) total += 1;
-    if (widget.evaluation.section4Data['flacidez_sulco_naso'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_complexo_frontal'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_palpebra_sup_d'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_palpebra_sup_e'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_palpebra_inf_d'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_palpebra_inf_e'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_bochecha_d'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_bochecha_e'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_canto_boca_d'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_canto_boca_e'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_platisma'] == true) total += 1;
+    if (widget.evaluation.section4Data['flacidez_nariz'] == true) total += 1;
 
     widget.evaluation.section4Score = total;
   }
@@ -53,7 +68,7 @@ class _Section4ScreenState extends State<Section4Screen> {
             value: entry.key,
             groupValue: widget.evaluation.section4Data[key] as String?,
             onChanged: (val) {
-              if (val != null) _updateScore(key, val, entry.value);
+              if (val != null) _updateRadioScore(key, val, entry.value);
             },
             dense: true,
             contentPadding: EdgeInsets.zero,
@@ -83,7 +98,7 @@ class _Section4ScreenState extends State<Section4Screen> {
           divisions: maxVal,
           label: currentVal.toString(),
           onChanged: (val) {
-            _updateScore(key, val.toInt());
+            _updateSliderScore(key, val.toInt());
           },
         ),
       ],
@@ -91,12 +106,12 @@ class _Section4ScreenState extends State<Section4Screen> {
   }
 
   Widget _buildCheckbox(String title, String key) {
-    bool isChecked = (widget.evaluation.section4Data[key] as int? ?? 0) == 1;
+    bool isChecked = widget.evaluation.section4Data[key] == true;
     return CheckboxListTile(
       title: Text(title),
       value: isChecked,
       onChanged: (val) {
-        _updateScore(key, val == true ? 1 : 0);
+        _updateCheckboxScore(key, val == true);
       },
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.leading,
@@ -116,39 +131,39 @@ class _Section4ScreenState extends State<Section4Screen> {
           children: [
             const Text('Aspectos Gerais', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
             const SizedBox(height: 8),
-            _buildRadioGroup('Formato Facial', 'formato_facial', {'Adequado (0)': 0, 'Alterado (1)': 1}),
-            _buildRadioGroup('Tipo de Pele', 'tipo_pele', {'Boa qualidade (0)': 0, 'Ressecada/Oleosa (1)': 1, 'Muito alterada (2)': 2}),
-            _buildRadioGroup('Cicatrizes', 'cicatrizes', {'Ausentes (0)': 0, 'Discretas (1)': 1, 'Evidentes (2)': 2}),
+            _buildRadioGroup('Formato Facial', 'formato_facial', {'Reto (0)': 0, 'Côncavo (0)': 0, 'Convexo (0)': 0}),
+            _buildRadioGroup('Cicatrizes', 'cicatrizes', {'Atróficas (0)': 0, 'Hipertróficas (0)': 0, 'Queloides (0)': 0, 'Normotróficas (0)': 0, 'Ausentes (0)': 0}),
             
             const SizedBox(height: 24),
-            const Text('Rugas e Sulcos (Classificação Lemperle 0 a 5)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
+            const Text('Rugas e Sulcos', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
+            const Text('Legenda do protocolo: [Insira a legenda das rugas aqui]', style: TextStyle(color: Colors.grey, fontSize: 13, fontStyle: FontStyle.italic)),
             const SizedBox(height: 16),
-            _buildSlider('Linhas Frontais (Testa)', 'rugas_frontais', 5),
-            _buildSlider('Glabela', 'rugas_glabela', 5),
-            _buildSlider('Periorbitais (Pés de galinha)', 'rugas_periorbitais', 5),
-            _buildSlider('Sulco Nasogeniano (Bigode Chinês)', 'rugas_nasogeniano', 5),
-            _buildSlider('Linhas Periorais (Código de barras)', 'rugas_periorais', 5),
-            _buildSlider('Sulco Labiomentual (Marionete)', 'rugas_marionete', 5),
-            _buildSlider('Bochechas', 'rugas_bochechas', 5),
-            _buildSlider('Platisma (Pescoço)', 'rugas_platisma', 5),
-            _buildSlider('Lóbulos da Orelha', 'rugas_orelha', 5),
-            _buildSlider('Região Mentual (Queixo)', 'rugas_mento', 5),
-            _buildSlider('Colo', 'rugas_colo', 5),
+            _buildSlider('Linhas horizontais da testa', 'rugas_frontais', 5),
+            _buildSlider('Linhas de expressão glabelares', 'rugas_glabela', 5),
+            _buildSlider('Linhas periorbitais', 'rugas_periorbitais', 5),
+            _buildSlider('Linhas pré-auriculares', 'rugas_orelha', 5),
+            _buildSlider('Linhas das bochechas', 'rugas_bochechas', 5),
+            _buildSlider('Sulcos nasolabiais', 'rugas_nasogeniano', 5),
+            _buildSlider('Linhas radiais do lábio superior', 'rugas_periorais', 5),
+            _buildSlider('Linhas do canto da boca', 'rugas_canto_boca', 5),
+            _buildSlider('Sulcos labiomandibulares', 'rugas_labiomandibular', 5),
+            _buildSlider('Sulco labiomentual', 'rugas_marionete', 5),
+            _buildSlider('Linhas horizontais do pescoço', 'rugas_pescoco', 5),
 
             const SizedBox(height: 24),
             const Text('Mapeamento de Flacidez (1 pt cada)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
             const SizedBox(height: 8),
-            _buildCheckbox('Pálpebra Superior', 'flacidez_palpebra_sup'),
-            _buildCheckbox('Pálpebra Inferior', 'flacidez_palpebra_inf'),
-            _buildCheckbox('Bochechas (Terço Médio)', 'flacidez_bochechas'),
-            _buildCheckbox('Contorno Mandibular', 'flacidez_mandibula'),
-            _buildCheckbox('Submentoniana (Papada)', 'flacidez_papada'),
-            _buildCheckbox('Pescoço (Platisma)', 'flacidez_pescoco'),
-            _buildCheckbox('Lóbulos da Orelha', 'flacidez_orelha'),
-            _buildCheckbox('Lábio Superior', 'flacidez_labio_sup'),
-            _buildCheckbox('Lábio Inferior', 'flacidez_labio_inf'),
-            _buildCheckbox('Comissuras Labiais', 'flacidez_comissuras'),
-            _buildCheckbox('Sulco Nasogeniano', 'flacidez_sulco_naso'),
+            _buildCheckbox('Queda do complexo frontal, as sobrancelhas caem abaixo do rebordo orbitário (1)', 'flacidez_complexo_frontal'),
+            _buildCheckbox('Queda do complexo da pálpebra superior direita, causando projeção sobre os cílios formando um capuz orbital lateral (1)', 'flacidez_palpebra_sup_d'),
+            _buildCheckbox('Queda do complexo da pálpebra superior esquerda, causando projeção sobre os cílios formando um capuz orbital lateral (1)', 'flacidez_palpebra_sup_e'),
+            _buildCheckbox('Queda do complexo da pálpebra inferior direita, formando as olheiras e sulco nasojugal (1)', 'flacidez_palpebra_inf_d'),
+            _buildCheckbox('Queda do complexo da pálpebra inferior esquerda, formando as olheiras e sulco nasojugal (1)', 'flacidez_palpebra_inf_e'),
+            _buildCheckbox('Queda da bochecha direita, formando o sulco nasogeniano (1)', 'flacidez_bochecha_d'),
+            _buildCheckbox('Queda da bochecha esquerda, formando o sulco nasogeniano (1)', 'flacidez_bochecha_e'),
+            _buildCheckbox('Queda do canto de boca direito, refletindo em um "sorriso de marionete" ou "boca triste" (1)', 'flacidez_canto_boca_d'),
+            _buildCheckbox('Queda do canto de boca esquerdo, refletindo em um "sorriso de marionete" ou "boca triste" (1)', 'flacidez_canto_boca_e'),
+            _buildCheckbox('Queda do músculo platisma, quebrando a linha da mandíbula (1)', 'flacidez_platisma'),
+            _buildCheckbox('Queda da ponta do nariz (1)', 'flacidez_nariz'),
 
             const SizedBox(height: 24),
           ],
@@ -177,7 +192,7 @@ class _Section4ScreenState extends State<Section4Screen> {
                 children: [
                   const Text('Escore Atual', style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.w600)),
                   Text(
-                    '${widget.evaluation.section4Score} / 71',
+                    '${widget.evaluation.section4Score} / 66',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.primary),
                   ),
                 ],

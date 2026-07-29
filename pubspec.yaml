@@ -1,5 +1,5 @@
 name: promofe_digital
-description: "PROMOFE Digital - Avaliação Fonoaudiológica em Estética Facial"
+description: "proMOface - Avaliação Fonoaudiológica em Estética Facial"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -25,3 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/

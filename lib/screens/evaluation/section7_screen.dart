@@ -99,8 +99,9 @@ class _Section7ScreenState extends State<Section7Screen> {
             const SizedBox(height: 24),
 
             const Text('Expectativa de Mudança', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
+            const Text('Legenda do protocolo: [Insira a legenda da expectativa aqui]', style: TextStyle(color: Colors.grey, fontSize: 13, fontStyle: FontStyle.italic)),
             const SizedBox(height: 16),
-            _buildSlider('Qual o seu grau de expectativa com o tratamento?', 'expectativa_grau', 5),
+            _buildSlider('Em uma escala de 1 a 5, quão expressiva você espera que seja a mudança na sua aparência ao final do tratamento?', 'expectativa_grau', 5),
             
             const SizedBox(height: 32),
 
@@ -111,6 +112,7 @@ class _Section7ScreenState extends State<Section7Screen> {
                 'Imediatamente (Nas primeiras sessões)',
                 'Curto prazo (1 a 2 meses)',
                 'Médio/Longo prazo (3 meses ou mais)',
+                'Não sei estimar'
               ]
             ),
 

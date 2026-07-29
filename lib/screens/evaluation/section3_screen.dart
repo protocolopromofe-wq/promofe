@@ -54,7 +54,7 @@ class _Section3ScreenState extends State<Section3Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Antroposcopia e Funções'),
+        title: const Text('Antroposcopia e Antropometria'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -62,36 +62,61 @@ class _Section3ScreenState extends State<Section3Screen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildRadioGroup('Simetria Facial', 'simetria', {'Adequada (0)': 0, 'Alterada (1)': 1}),
+            if (widget.evaluation.section3Data['simetria'] == 'Alterada (1)') ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _buildRadioGroup('Grau da Alteração', 'simetria_grau', {'Leve (0)': 0, 'Moderado (0)': 0, 'Severo (0)': 0}),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _buildRadioGroup('Lado Aumentado', 'simetria_lado', {'Direito (0)': 0, 'Esquerdo (0)': 0}),
+              ),
+            ],
             _buildRadioGroup('Proporção dos Terços', 'proporcao_tercos', {'Adequada (0)': 0, 'Alterada (1)': 1}),
-            _buildRadioGroup('Lábios (Repouso)', 'labios', {'Ocluídos (0)': 0, 'Entreabertos/Abertos (1)': 1}),
-            _buildRadioGroup('Volume Labial', 'volume_labial', {'Normal (0)': 0, 'Alterado (1)': 1}),
-            _buildRadioGroup('Comissuras', 'comissuras', {'Niveladas (0)': 0, 'Desniveladas (1)': 1}),
+            _buildRadioGroup('Lábios (Repouso)', 'labios', {'Selados (0)': 0, 'Vedados com tensão (1)': 1, 'Entreabertos (2)': 2}),
+            _buildRadioGroup('Volume Labial Superior', 'volume_labial_sup', {'Normal (0)': 0, 'Diminuído e estirado (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Volume Labial Inferior', 'volume_labial_inf', {'Normal (0)': 0, 'Com eversão (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Comissuras', 'comissuras', {'No nível da rima bucal e simétricas (0)': 0, 'Abaixo da rima bucal e/ou assimétricas (1)': 1}),
+            if (widget.evaluation.section3Data['comissuras'] == 'Abaixo da rima bucal e/ou assimétricas (1)') ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _buildRadioGroup('Lado Abaixo', 'comissuras_lado', {'Direito (0)': 0, 'Esquerdo (0)': 0, 'Ambos (0)': 0}),
+              ),
+            ],
             _buildRadioGroup('Mento', 'mento', {'Adequado (0)': 0, 'Contraído/Alterado (1)': 1}),
+            if (widget.evaluation.section3Data['mento'] == 'Contraído/Alterado (1)') ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _buildRadioGroup('Grau da Alteração', 'mento_grau', {'Leve (0)': 0, 'Moderado (0)': 0, 'Severo (0)': 0}),
+              ),
+            ],
             
             const Text('Mandíbula (Medidas)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text('Legenda do protocolo: [Insira a legenda das medidas aqui]', style: TextStyle(color: Colors.grey, fontSize: 13, fontStyle: FontStyle.italic)),
             const SizedBox(height: 8),
-            _buildRadioGroup('Abertura Máxima', 'mandibula_abertura', {'Adequada (0)': 0, 'Reduzida/Desvio (1)': 1}),
-            _buildRadioGroup('Lateralidade Direita', 'mandibula_lat_d', {'Adequada (0)': 0, 'Alterada (1)': 1}),
-            _buildRadioGroup('Lateralidade Esquerda', 'mandibula_lat_e', {'Adequada (0)': 0, 'Alterada (1)': 1}),
+            _buildRadioGroup('Abertura Máxima', 'mandibula_abertura', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Lateralidade Direita', 'mandibula_lat_d', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Lateralidade Esquerda', 'mandibula_lat_e', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
             
             const SizedBox(height: 16),
             const Text('Avaliação de Tônus', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
+            const Text('Legenda do protocolo: [Insira a legenda do tônus aqui]', style: TextStyle(color: Colors.grey, fontSize: 13, fontStyle: FontStyle.italic)),
             const SizedBox(height: 8),
             
-            _buildRadioGroup('Lábio Superior', 'tonus_labio_sup', {'Normal (0)': 0, 'Hipo/Hipertensão (1)': 1}),
-            _buildRadioGroup('Lábio Inferior', 'tonus_labio_inf', {'Normal (0)': 0, 'Hipo/Hipertensão (1)': 1}),
-            _buildRadioGroup('Mento', 'tonus_mento', {'Normal (0)': 0, 'Hipertensão (1)': 1}),
-            _buildRadioGroup('Sulco Mentolabial', 'tonus_sulco', {'Normal (0)': 0, 'Acentuado (1)': 1}),
-            _buildRadioGroup('Bochecha Direita', 'tonus_bochecha_d', {'Normal (0)': 0, 'Flácida/Tensa (1)': 1}),
-            _buildRadioGroup('Bochecha Esquerda', 'tonus_bochecha_e', {'Normal (0)': 0, 'Flácida/Tensa (1)': 1}),
+            _buildRadioGroup('Lábio Superior', 'tonus_labio_sup', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Lábio Inferior', 'tonus_labio_inf', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Mento', 'tonus_mento', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Sulco Mentolabial', 'tonus_sulco', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Bochecha Direita', 'tonus_bochecha_d', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
+            _buildRadioGroup('Bochecha Esquerda', 'tonus_bochecha_e', {'Normal (0)': 0, 'Reduzido (1)': 1, 'Aumentado (1)': 1}),
 
             const SizedBox(height: 16),
             const Text('Funções Estomatognáticas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal)),
             const SizedBox(height: 8),
             
-            _buildRadioGroup('Respiração', 'funcao_respiracao', {'Nasal (0)': 0, 'Oronasal (1)': 1, 'Oral (2)': 2, 'Com esforço (3)': 3}),
-            _buildRadioGroup('Mastigação', 'funcao_mastigacao', {'Bilateral Alternada (0)': 0, 'Unilateral Preferencial (1)': 1, 'Unilateral Crônica (2)': 2, 'Inadequada (3)': 3}),
-            _buildRadioGroup('Deglutição', 'funcao_degluticao', {'Adequada (0)': 0, 'Atípica leve (1)': 1, 'Atípica moderada (2)': 2, 'Adaptada/Severa (3)': 3}),
+            _buildRadioGroup('Respiração', 'funcao_respiracao', {'Nasal (0)': 0, 'Oronasal (1)': 1}),
+            _buildRadioGroup('Mastigação', 'funcao_mastigacao', {'Unilateral esquerda (1)': 1, 'Unilateral direita (1)': 1, 'Bilateral simultânea (1)': 1, 'Bilateral alternada (0)': 0}),
+            _buildRadioGroup('Deglutição', 'funcao_degluticao', {'Sem esforço (0)': 0, 'Contração excessiva da musculatura perioral (1)': 1, 'Contração excessiva da musculatura cervical (1)': 1}),
 
             const SizedBox(height: 24),
           ],
@@ -120,7 +145,7 @@ class _Section3ScreenState extends State<Section3Screen> {
                 children: [
                   const Text('Escore Atual', style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.w600)),
                   Text(
-                    '${widget.evaluation.section3Score} / 24',
+                    '${widget.evaluation.section3Score} / 22',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.primary),
                   ),
                 ],

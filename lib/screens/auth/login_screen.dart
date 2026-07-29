@@ -14,29 +14,11 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo Placeholder
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.face_retouching_natural, // Ícone temporário
-                    size: 50,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                
-                // Título
-                Text(
-                  'PROMOFE Digital',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                // Logo da aplicação
+                Image.asset(
+                  'assets/logo_landscape.jpg',
+                  height: 120,
+                  fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 8),
                 Text(
