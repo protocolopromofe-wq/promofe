@@ -92408,7 +92408,7 @@ $S:558}
 A.a56.prototype={}
 A.uq.prototype={}
 A.u2.prototype={
-K(a){var s,r,q,p,o,n=null,m=A.aFw(n,n,new A.xS("assets/logo_landscape.jpg",n,n)),l=A.Q(a).ok.z
+K(a){var s,r,q,p,o,n=null,m=A.aFw(n,n,new A.xS("assets/logo_landscape_v2.jpg",n,n)),l=A.Q(a).ok.z
 l=A.bX("Fa\xe7a login para acessar suas avalia\xe7\xf5es.",n,n,n,l==null?n:l.bD(B.cB),B.dj,n)
 s=A.nx(B.Xw,new A.a96(),n)
 r=A.oM(B.X0,new A.a97(a),A.oN(n,n,A.Q(a).ax.b,n,n,n,0,n,n,B.j,n,B.m7,n,n,new A.c0(A.fB(12),B.n),n,n,n,n,n))
